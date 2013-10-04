@@ -27,7 +27,7 @@ describe "Creating an account" do
       click_link "Sign Up"
       lambda{
         within("#new_user") do
-          fill_in "Email", :with => Forgery(:internet).email_address
+          fill_in "Email", :with => "jim@jimvanfleet.com"
           fill_in "Password", :with => "12345678"
           fill_in "Password confirmation", :with => "12345678"
           click_button "Sign up"
@@ -37,7 +37,9 @@ describe "Creating an account" do
     end
 
   end
+
 end
+
 
 
 describe "Logging in" do
@@ -50,7 +52,6 @@ describe "Logging in" do
   context "in error cases" do
 
     it "should not allow a login" do
-      User.destroy_all
       signup("jim@jimvanfleet.com")
       logout
       visit root_path
@@ -67,7 +68,17 @@ describe "Logging in" do
   end
 
   context "when successful" do
-
+    it "logs in" do
+      signup("jim@jimvanfleet.com")
+      logout
+      visit root_path
+      click_link "Sign In"
+      within("#new_user") do
+        fill_in "Email" , :with => "jim@jimvanfleet.com"
+        fill_in "Password" , :with => "12345678"
+        click_button "Sign in"
+      end
+      expect(page).to have_content("successfully")
+    end
   end
-
 end
