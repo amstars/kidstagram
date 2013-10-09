@@ -1,4 +1,4 @@
-== README
+
 
 Despite the horrible name, this will be my main RoR exercise.
 
